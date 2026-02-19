@@ -33,7 +33,7 @@ async function registerUser(req, res) {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: true, // production me true
+    secure: false, // production me true
     sameSite: "strict",
   });
 
@@ -82,7 +82,7 @@ async function loginUser(req,res){
   //save token cookie
     res.cookie("token", token, {
     httpOnly: true,
-    secure: true, // production me true
+    secure: false, // production me true
     sameSite: "strict",
   });
 
