@@ -101,6 +101,11 @@ async function loginUser(req,res){
 
 }
 
-export default { registerUser,loginUser };
+async function logoutUser(req,res){
+  res.clearCookie("token")
+  res.status(200).json({ message : "User logged out succesfully"})
+}
+
+export default { registerUser,loginUser,logoutUser };
 
 // $or : Koi bhi condition true ho → data mil jayega

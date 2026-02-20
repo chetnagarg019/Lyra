@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import musicController from "../controllers/musicController.js"
 import multer from "multer";
+import authMiddleware from "../middleware/authMiddleware.js";
 //👉 Multer file upload handle karta hai.
 
 //multer use
@@ -13,8 +14,13 @@ const upload = multer({
 // 👉 Direct disk pe save nahi hogi
 // 👉 Hum isko baad me cloud (ImageKit) pe upload karenge
 
-router.post("/create",upload.single("music"), musicController.createMusic)
-router.post("/album",musicController.createAlbum)
+router.post("/create", authMiddleware.middleware_1, upload.single("music"), musicController.createMusic)
+router.post("/album", authMiddleware.middleware_1, musicController.createAlbum)
+router.get("/", musicController.getAllMusic)
+router.get("/albums",musicController.getAllAlbums)
+router.get("/albums/:albumId",musicController.getAlbumById)
+//ek esi api bnani hai normal user ke liye jo ki sare songs sun skte hai 
+
 //upload.single("music") =>  Multer file handle karega Form-data me "music" naam ki file expect karega File ko req.file me daal dega
 
 export default router;
