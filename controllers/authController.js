@@ -2,7 +2,7 @@ import User from "../model/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-async function registerUser(req, res) {
+async function registerUser(req, res) { // means sign up krna
   const { name, email, password, role = "user" } = req.body;
 
   //if email is already exist

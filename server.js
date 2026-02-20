@@ -6,7 +6,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js"
 import musicRoutes from "./routes/musicRoutes.js"
 import cookieParser from "cookie-parser";
-import services from "./services/storageServices.js"
+// import services from "./services/storageServices.js"
 
 connectDB();
 const app = express();
