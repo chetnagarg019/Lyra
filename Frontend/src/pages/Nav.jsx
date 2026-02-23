@@ -49,6 +49,8 @@ function Navbar() {
           Login
         </Link>
 
+        
+
         {/* Sign Up */}
         <Link to="/signup" className="bg-white text-black px-4 py-1 rounded-full font-semibold hover:scale-105 transition">
           Sign Up
