@@ -7,6 +7,9 @@ import Nav from "./pages/Nav.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import CreateMusic from "./pages/CreateMusic.jsx";
+import CreateAlbum from "./pages/CreateAlbum.jsx";
+
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
@@ -21,8 +24,11 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+
+          <Route path="/create-album" element={<CreateAlbum />} />
+          
           <Route
-            path="/create"
+            path="/create-music"
             element={
               <ProtectedRoute role="artist">
                 <CreateMusic />

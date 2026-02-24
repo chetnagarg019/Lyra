@@ -93,24 +93,64 @@ async function createMusic(req, res) {
   }
 }
 
+//create album
+
+// async function createAlbum(req, res) {
+//   const { title, musics } = req.body;
+
+//   const album = await albumModel.create({
+//     title,
+//     artist: req.user.id,
+//     musics: musics,
+//   });
+
+//   res.status(201).json({
+//     message: "Album created successfully",
+//     album: {
+//       id: album._id,
+//       title: album.title,
+//       artist: album.artist,
+//       musics: album.musics,
+//     },
+//   });
+// }
+
 async function createAlbum(req, res) {
-  const { title, musics } = req.body;
+  try {
+    // 1️⃣ Only artist can create album
+    if (req.user.role !== "artist") {
+      return res.status(403).json({ message: "Only artists can create albums" });
+    }
 
-  const album = await albumModel.create({
-    title,
-    artist: req.user.id,
-    musics: musics,
-  });
+    const { title, musics } = req.body;
 
-  res.status(201).json({
-    message: "Album created successfully",
-    album: {
-      id: album._id,
-      title: album.title,
-      artist: album.artist,
-      musics: album.musics,
-    },
-  });
+    // 2️⃣ Validate musics (only artist’s own songs)
+    const allowedMusics = await musicmodel.find({
+      _id: { $in: musics },
+      artist: req.user.id
+    });
+
+    if (allowedMusics.length !== musics.length) {
+      return res.status(400).json({ message: "You can only add your own music to album" });
+    }
+
+    // 3️⃣ Create album
+    const album = await albumModel.create({
+      title,
+      artist: req.user.id,
+      musics: allowedMusics.map(m => m._id),
+    });
+
+    res.status(201).json({
+      message: "Album created successfully",
+      album,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error creating album",
+      error: error.message,
+    });
+  }
 }
 
 //all music in database

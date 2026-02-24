@@ -14,11 +14,11 @@ const upload = multer({
 // 👉 Direct disk pe save nahi hogi
 // 👉 Hum isko baad me cloud (ImageKit) pe upload karenge
 
-router.post("/create", authMiddleware.middleware_1, upload.single("music"), musicController.createMusic)
+router.post("/create", authMiddleware.middleware_1, upload.single("music"), musicController.createMusic) //done
 router.post("/album", authMiddleware.middleware_1, musicController.createAlbum)
-router.get("/", musicController.getAllMusic)
+router.get("/", musicController.getAllMusic) //done
 router.get("/albums",musicController.getAllAlbums)
-router.get("/albums/:albumId",musicController.getAlbumById)
+router.get("/albums/:albumId",musicController.getAlbumById) 
 //ek esi api bnani hai normal user ke liye jo ki sare songs sun skte hai 
 
 //upload.single("music") =>  Multer file handle karega Form-data me "music" naam ki file expect karega File ko req.file me daal dega

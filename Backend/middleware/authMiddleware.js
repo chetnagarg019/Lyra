@@ -8,6 +8,10 @@ async function middleware_1(req, res, next) {
     return res.status(401).json({ message: "Unauthorizes" });
   }
 
+  if (req.user.role !== "artist") {
+    return res.status(403).json({ message: "Only artists can create albums" });
+  }
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -19,11 +23,11 @@ async function middleware_1(req, res, next) {
 
     req.user = decoded;
 
-    next()
+    next();
   } catch (error) {
     console.log(error);
     return res.status(401).json({ message: "Unauthorized" });
   }
 }
 
-export default {middleware_1}
+export default { middleware_1 };

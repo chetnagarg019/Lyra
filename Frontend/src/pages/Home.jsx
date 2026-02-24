@@ -33,12 +33,24 @@ const Home = () => {
       {/* ✅ Show only if artist */}
       {user?.role === "artist" && (
         <Link
-          to="/create"
+          to="/create-music"
           className="bg-white text-black px-4 py-1 rounded-full font-semibold hover:scale-105 transition "
         >
           Create Music 
         </Link>
       )}
+
+      {/* create album btn */}
+      <Link
+          to="/create-album"
+          className="bg-white text-black px-4 py-1 rounded-full font-semibold hover:scale-105 transition "
+        >
+          Create album 
+      </Link>
+
+
+
+
 
       <h1 className="text-3xl font-bold mb-6">Trending Songs 🎵</h1>
       {/* Songs Grid */}
