@@ -1,5 +1,7 @@
 import React,{useState} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+// import Login from "Login.jsx";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ const Signup = () => {
     password: "",
     role: "user", //default value
   });
+
+   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,6 +27,7 @@ const Signup = () => {
 
       alert(res.data.message); // Signup successful
       console.log("Signup Response:", res.data);
+      navigate("/login")
     } catch (error) {
       alert(error.response?.data?.message || "Signup failed");
       console.error("Signup Error:", error);

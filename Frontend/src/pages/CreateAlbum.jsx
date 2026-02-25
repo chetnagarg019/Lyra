@@ -36,3 +36,29 @@ const CreateAlbum = () => {
 }
 
 export default CreateAlbum;
+
+//abnum artist craete krta hai nirmal user nhi
+// Production me process aisa hota hai:
+
+// Step 1:
+// Artist login karta hai
+
+// Step 2:
+// Artist ne already kuch songs upload kiye hote hain
+
+// Step 3:
+// Frontend me ek button dikhega:
+// 👉 “Create Album” (sirf artist ko visible)
+
+// Step 4:
+// Artist:
+// Album ka title likhega
+// Apne uploaded songs me se select karega
+// Submit karega
+
+// Step 5:
+// Backend check karega:
+// Role artist hai?
+// Songs usi artist ke hain?
+// Duplicate to nahi?
+// Phir album create ho jayega.

@@ -118,6 +118,9 @@ const Login = () => {
       alert(res.data.message);
       console.log("Login Response:", res.data);
 
+    // is line ko add krne se ye pta hota hai user hai ya artist jisse btn usi hisabh se show hu
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
       navigate("/");
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");

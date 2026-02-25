@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -28,29 +27,28 @@ const Home = () => {
 
   return (
     <div className="bg-gradient-to-b from-black to-neutral-900 min-h-screen text-white p-8">
-      <h1>hello this is </h1>
+     
 
       {/* ✅ Show only if artist */}
       {user?.role === "artist" && (
-        <Link
-          to="/create-music"
-          className="bg-white text-black px-4 py-1 rounded-full font-semibold hover:scale-105 transition "
-        >
-          Create Music 
-        </Link>
+        <>
+          <Link
+            to="/create-music"
+            className="bg-white text-black px-4 py-1 rounded-full font-semibold hover:scale-105 transition"
+          >
+            Create Music
+          </Link>
+
+          <Link
+            to="/create-album"
+            className="bg-white text-black px-4 py-1 rounded-full font-semibold hover:scale-105 transition ml-3"
+          >
+            Create Album
+          </Link>
+        </>
       )}
 
-      {/* create album btn */}
-      <Link
-          to="/create-album"
-          className="bg-white text-black px-4 py-1 rounded-full font-semibold hover:scale-105 transition "
-        >
-          Create album 
-      </Link>
-
-
-
-
+      
 
       <h1 className="text-3xl font-bold mb-6">Trending Songs 🎵</h1>
       {/* Songs Grid */}
