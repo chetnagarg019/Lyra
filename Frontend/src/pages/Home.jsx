@@ -45,8 +45,19 @@ const Home = () => {
           >
             Create Album
           </Link>
+
+
+         
         </>
       )}
+
+        <Link
+            to="/all-albums"
+            className="bg-white text-black px-4 py-1 rounded-full font-semibold hover:scale-105 transition ml-3"
+          >
+            All Albums
+          </Link>
+
 
       
 

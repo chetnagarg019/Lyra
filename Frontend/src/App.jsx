@@ -8,7 +8,8 @@ import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import CreateMusic from "./pages/CreateMusic.jsx";
 import CreateAlbum from "./pages/CreateAlbum.jsx";
-
+import AllAlbums from "./pages/AllAlbums.jsx";
+import AlbumDetails from "./pages/AlbumDetails.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
@@ -23,6 +24,10 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/all-albums" element={<AllAlbums />} />
+          <Route path="/album/:albumId" element={<AlbumDetails />} />
+          
+
 
           <Route
             path="/create-music"

@@ -50,7 +50,7 @@ async function middleware_1(req, res, next) {
     // Fir role check karo
     if (req.user.role !== "artist") {
       return res.status(403).json({
-        message: "Only artists can create albums"
+        message: "Only artists can create albums",
       });
     }
 

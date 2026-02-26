@@ -112,7 +112,7 @@ const CreateAlbum = () => {
       );
 
       alert("Album created successfully 🎉");
-      navigate("/");
+      navigate("/all-albums");
     } catch (err) {
       alert(err.response?.data?.message || "Error creating album");
     }

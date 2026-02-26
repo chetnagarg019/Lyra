@@ -4,8 +4,6 @@ import storageServices from "../services/storageServices.js";
 import albumModel from "../model/album.js";
 import crypto from "crypto";
 
-
-
 // async function createMusic(req, res) {
 //   const { title } = req.body; // title form-data se aa rha hai
 //   const file = req.file; // multer ke through aa rhi hai
@@ -50,7 +48,7 @@ async function createMusic(req, res) {
 
     // ✅ Step 2: Generate hash from file buffer
     const hash = crypto
-      .createHash("sha256") //cryptographic hash generate karta hai Same file ka hash hammesha same hoga 
+      .createHash("sha256") //cryptographic hash generate karta hai Same file ka hash hammesha same hoga
       .update(file.buffer) //file ka binary data
       .digest("hex");
 
@@ -65,7 +63,7 @@ async function createMusic(req, res) {
 
     // ✅ Step 4: Upload to cloud
     const result = await storageServices.uploadFile(
-      file.buffer.toString("base64")
+      file.buffer.toString("base64"),
     );
 
     // ✅ Step 5: Save to database including hash
@@ -119,7 +117,9 @@ async function createAlbum(req, res) {
   try {
     // 1️⃣ Only artist can create album
     if (req.user.role !== "artist") {
-      return res.status(403).json({ message: "Only artists can create albums" });
+      return res
+        .status(403)
+        .json({ message: "Only artists can create albums" });
     }
 
     const { title, musics } = req.body;
@@ -127,18 +127,20 @@ async function createAlbum(req, res) {
     // 2️⃣ Validate musics (only artist’s own songs)
     const allowedMusics = await musicmodel.find({
       _id: { $in: musics },
-      artist: req.user.id
+      artist: req.user.id,
     });
 
     if (allowedMusics.length !== musics.length) {
-      return res.status(400).json({ message: "You can only add your own music to album" });
+      return res
+        .status(400)
+        .json({ message: "You can only add your own music to album" });
     }
 
     // 3️⃣ Create album
     const album = await albumModel.create({
       title,
       artist: req.user.id,
-      musics: allowedMusics.map(m => m._id),
+      musics: allowedMusics.map((m) => m._id),
     });
 
     res.status(201).json({
@@ -152,18 +154,17 @@ async function createAlbum(req, res) {
     });
   }
 }
-//ye hau new route jo artist ki id ke hisabh se usi ke song dega jo jo usne create kr krhe honge 
-async function getMySongs(req,res){
-  try{
-    const songs = await musicmodel.find({ artist : req.user.id });
+//ye hau new route jo artist ki id ke hisabh se usi ke song dega jo jo usne create kr krhe honge
+async function getMySongs(req, res) {
+  try {
+    const songs = await musicmodel.find({ artist: req.user.id });
 
     res.status(200).json(songs);
-  }catch(error){
+  } catch (error) {
     res.status(500).json({
-      message : "Error fetching your songs",
-      error : error.message,
+      message: "Error fetching your songs",
+      error: error.message,
     });
-
   }
 }
 
@@ -172,53 +173,81 @@ async function getMySongs(req,res){
 
 //   const music = await musicmodel.find().limit(3).populate("artist","name email")
 
-
 //   res.status(200).json({
 //     message : "Music fetched successfully",
 //     musics : music
 //   })
 // }
 
-async function getAllMusic(req,res){
-  try{
-    const music = await musicmodel.find().populate("artist","name email");
+async function getAllMusic(req, res) {
+  try {
+    const music = await musicmodel.find().populate("artist", "name email");
 
     res.status(200).json({
-      message : "Music fetched successfully",
-      musics : music
-    })
-  }
-  catch(error){
+      message: "Music fetched successfully",
+      musics: music,
+    });
+  } catch (error) {
     res.status(500).json({
-      message : "Error fetching music",
-      error : error.message
-    })
+      message: "Error fetching music",
+      error: error.message,
+    });
   }
 }
 
-async function getAllAlbums(req,res) {
+// sari albums
 
-  const album = await albumModel.find().select("title artist").populate("artist","name email")
+// async function getAllAlbums(req,res) {
 
-  res.status(200).json({
-    message : "Albums fetched successfully",
-    albums : album
-  })
+//   const album = await albumModel.find()
+//   .select("title artist")
+//   .populate("artist","name email")
+//   .populate("musics");  // 👈 ye add karo
+
+//   res.status(200).json({
+//     message : "Albums fetched successfully",
+//     albums : album
+//   })
+// }
+
+async function getAllAlbums(req, res) {
+  try {
+    const albums = await albumModel
+      .find()
+      .populate("artist", "name email")
+      .populate("musics"); // 👈 ye add karo
+
+    res.status(200).json({
+      message: "Albums fetched successfully",
+      albums,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching albums",
+      error: error.message,
+    });
+  }
 }
-
 //get all music of in album  ablum me jitte bhi musics hai unko fetch
-async function getAlbumById(req,res) {
+async function getAlbumById(req, res) {
   const albumId = req.params.albumId;
 
-  const album = await albumModel.findById(albumId).populate("artist","username email").populate("musics")
+  const album = await albumModel
+    .findById(albumId)
+    .populate("artist", "name email")
+    .populate("musics");
 
   return res.status(200).json({
-    message : "Album music fetched succefully",
-    album : album
-  })
+    message: "Album music fetched succefully",
+    album: album,
+  });
 }
 
-
-
-export default { createMusic, createAlbum, getAllMusic, getAllAlbums, getAlbumById,getMySongs };
-
+export default {
+  createMusic,
+  createAlbum,
+  getAllMusic,
+  getAllAlbums,
+  getAlbumById,
+  getMySongs,
+};
