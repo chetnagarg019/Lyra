@@ -152,6 +152,20 @@ async function createAlbum(req, res) {
     });
   }
 }
+//ye hau new route jo artist ki id ke hisabh se usi ke song dega jo jo usne create kr krhe honge 
+async function getMySongs(req,res){
+  try{
+    const songs = await musicmodel.find({ artist : req.user.id });
+
+    res.status(200).json(songs);
+  }catch(error){
+    res.status(500).json({
+      message : "Error fetching your songs",
+      error : error.message,
+    });
+
+  }
+}
 
 //all music in database
 // async function getAllMusic(req,res) {
@@ -206,5 +220,5 @@ async function getAlbumById(req,res) {
 
 
 
-export default { createMusic, createAlbum, getAllMusic, getAllAlbums, getAlbumById };
+export default { createMusic, createAlbum, getAllMusic, getAllAlbums, getAlbumById,getMySongs };
 

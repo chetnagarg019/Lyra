@@ -17,6 +17,7 @@ const upload = multer({
 router.post("/create", authMiddleware.middleware_1, upload.single("music"), musicController.createMusic) //done
 router.post("/album", authMiddleware.middleware_1, musicController.createAlbum)
 router.get("/", musicController.getAllMusic) //done
+router.get("/my-songs", authMiddleware.middleware_1, musicController.getMySongs); // new route 
 router.get("/albums",musicController.getAllAlbums)
 router.get("/albums/:albumId",musicController.getAlbumById) 
 //ek esi api bnani hai normal user ke liye jo ki sare songs sun skte hai 
