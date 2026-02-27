@@ -12,10 +12,10 @@ import AllAlbums from "./pages/AllAlbums.jsx";
 import AlbumDetails from "./pages/AlbumDetails.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SearchPage from "./pages/SearchPage.jsx";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const App = () => {
-   const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -27,7 +27,7 @@ const App = () => {
     <>
       {/* <h1>Hello this is home page</h1> */}
       <Router>
-        <Nav user={user} setUser={setUser}  />
+        <Nav user={user} setUser={setUser} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
@@ -37,10 +37,6 @@ const App = () => {
           <Route path="/all-albums" element={<AllAlbums />} />
           <Route path="/album/:albumId" element={<AlbumDetails />} />
           <Route path="/search" element={<SearchPage />} />
-          
-
-          
-
 
           <Route
             path="/create-music"
@@ -55,7 +51,7 @@ const App = () => {
             element={
               <ProtectedRoute role="artist">
                 <CreateAlbum />
-              </ProtectedRoute>
+              </ProtectedRoute> // it is a create album route that defines the root cost of the permit
             }
           />
         </Routes>
