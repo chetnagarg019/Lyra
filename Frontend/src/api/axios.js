@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: "http://localhost:5000",
-  withCredentials: true, // ✅ send cookies automatically
+  withCredentials: true, // send cookies automatically
 });
 
 // Automatically attach token to every request

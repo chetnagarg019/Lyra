@@ -3,7 +3,7 @@ const router = express.Router();
 import musicController from "../controllers/musicController.js"
 import multer from "multer";
 import authMiddleware from "../middleware/authMiddleware.js";
-//👉 Multer file upload handle karta hai.
+// Multer file upload handle karta hai.
 
 //multer use
 const upload = multer({
@@ -11,14 +11,15 @@ const upload = multer({
 })
 
 // File server ke RAM me temporarily store hogi
-// 👉 Direct disk pe save nahi hogi
-// 👉 Hum isko baad me cloud (ImageKit) pe upload karenge
+//  Direct disk pe save nahi hogi
+//  Hum isko baad me cloud (ImageKit) pe upload karenge
 
 router.post("/create", authMiddleware.middleware_1, upload.single("music"), musicController.createMusic) //done
 router.post("/album", authMiddleware.middleware_1, musicController.createAlbum) //done
 router.get("/", musicController.getAllMusic) //done
 router.get("/my-songs", authMiddleware.middleware_1, musicController.getMySongs); // new route  //done
 router.get("/albums",musicController.getAllAlbums)//done
+router.get("/search",musicController.getAllSearch);
 router.get("/albums/:albumId",musicController.getAlbumById) // done
 //ek esi api bnani hai normal user ke liye jo ki sare songs sun skte hai 
 

@@ -39,20 +39,20 @@ async function createMusic(req, res) {
     const { title } = req.body;
     const file = req.file;
 
-    // ✅ Step 1: File validation
+    //  Step 1: File validation
     if (!file) {
       return res.status(400).json({
         message: "Music file is required",
       });
     }
 
-    // ✅ Step 2: Generate hash from file buffer
+    //  Step 2: Generate hash from file buffer
     const hash = crypto
       .createHash("sha256") //cryptographic hash generate karta hai Same file ka hash hammesha same hoga
       .update(file.buffer) //file ka binary data
       .digest("hex");
 
-    // ✅ Step 3: Check duplicate file in DB
+    // Step 3: Check duplicate file in DB
     const existingMusic = await musicmodel.findOne({ hash }); //Agar database me same hash exist karta hai → upload reject ho jayega
 
     if (existingMusic) {
@@ -61,12 +61,12 @@ async function createMusic(req, res) {
       });
     }
 
-    // ✅ Step 4: Upload to cloud
+    //  Step 4: Upload to cloud
     const result = await storageServices.uploadFile(
       file.buffer.toString("base64"),
     );
 
-    // ✅ Step 5: Save to database including hash
+    //  Step 5: Save to database including hash
     const music = await musicmodel.create({
       uri: result.url,
       title,
@@ -115,7 +115,7 @@ async function createMusic(req, res) {
 
 async function createAlbum(req, res) {
   try {
-    // 1️⃣ Only artist can create album
+    //  Only artist can create album
     if (req.user.role !== "artist") {
       return res
         .status(403)
@@ -124,7 +124,7 @@ async function createAlbum(req, res) {
 
     const { title, musics } = req.body;
 
-    // 2️⃣ Validate musics (only artist’s own songs)
+    // 2 Validate musics (only artist’s own songs)
     const allowedMusics = await musicmodel.find({
       _id: { $in: musics },
       artist: req.user.id,
@@ -136,7 +136,7 @@ async function createAlbum(req, res) {
         .json({ message: "You can only add your own music to album" });
     }
 
-    // 3️⃣ Create album
+    // 3️ Create album
     const album = await albumModel.create({
       title,
       artist: req.user.id,
@@ -202,7 +202,7 @@ async function getAllMusic(req, res) {
 //   const album = await albumModel.find()
 //   .select("title artist")
 //   .populate("artist","name email")
-//   .populate("musics");  // 👈 ye add karo
+//   .populate("musics");  //  y
 
 //   res.status(200).json({
 //     message : "Albums fetched successfully",
@@ -215,7 +215,7 @@ async function getAllAlbums(req, res) {
     const albums = await albumModel
       .find()
       .populate("artist", "name email")
-      .populate("musics"); // 👈 ye add karo
+      .populate("musics"); // 
 
     res.status(200).json({
       message: "Albums fetched successfully",
@@ -243,6 +243,34 @@ async function getAlbumById(req, res) {
   });
 }
 
+async function getAllSearch(req, res) {
+  try {
+
+    const { query } = req.query;
+
+    if (!query) {
+      return res.status(400).json({
+        message: "Search query is required",
+      });
+    }
+
+    const songs = await musicmodel.find({
+      title: { $regex: query, $options: "i" }, // case insensitive search
+    }).populate("artist", "name email");
+
+    res.status(200).json({
+      message: "Search results",
+      songs,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error searching music",
+      error: error.message,
+    });
+  }
+}
+
 export default {
   createMusic,
   createAlbum,
@@ -250,4 +278,5 @@ export default {
   getAllAlbums,
   getAlbumById,
   getMySongs,
+  getAllSearch,
 };

@@ -9,7 +9,7 @@ const ImagekitClient = new ImageKit({
 //Private key se authentication kar raha hai
 
 //Jaise bank account me login karne ke liye password chahiye
-// waise ImageKit me upload karne ke liye private key chahiye 🔐
+// waise ImageKit me upload karne ke liye private key chahiye 
 
 async function uploadFile(file) {
   //Ye function file lega (base64 format me)

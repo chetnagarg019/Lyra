@@ -11,21 +11,34 @@ import CreateAlbum from "./pages/CreateAlbum.jsx";
 import AllAlbums from "./pages/AllAlbums.jsx";
 import AlbumDetails from "./pages/AlbumDetails.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
+import SearchPage from "./pages/SearchPage.jsx";
+import { useState,useEffect } from "react";
 
 const App = () => {
+   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
   return (
     <>
       {/* <h1>Hello this is home page</h1> */}
       <Router>
-        <Nav />
+        <Nav user={user} setUser={setUser}  />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/all-albums" element={<AllAlbums />} />
           <Route path="/album/:albumId" element={<AlbumDetails />} />
+          <Route path="/search" element={<SearchPage />} />
+          
+
           
 
 
