@@ -12,7 +12,7 @@ const createToken = (user) => {
 
 async function registerUser(req, res) {
   try {
-    const { name, email, password, role = "user" } = req.body;
+    const { name, email, password, role = "user" } = req.body; // frontend se jo data aaya use json format me if role nhi hai ro by defaylt user 
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
