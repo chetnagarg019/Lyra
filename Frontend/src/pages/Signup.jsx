@@ -13,14 +13,14 @@ const Signup = () => {
 
    const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { //I implemented a handleChange function that dynamically updates the form state using the input’s name attribute. Isse har input field ke liye alag function likhne ki zarurat nahi padti.
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); //On form submission, I prevent the default page reload using e.preventDefault().
 
     try {
-      const res = await axios.post(
+      const res = await axios.post( //Then I send a POST request to my backend API /api/auth/register using Axios.
         "http://localhost:5000/api/auth/register",
         formData,
       );

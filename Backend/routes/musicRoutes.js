@@ -18,7 +18,7 @@ router.post("/create", authMiddleware.middleware_1, upload.single("music"), musi
 router.post("/album", authMiddleware.middleware_1, musicController.createAlbum) //done
 router.get("/", musicController.getAllMusic) //done
 router.get("/my-songs", authMiddleware.middleware_1, musicController.getMySongs); // new route  //done
-router.get("/albums",musicController.getAllAlbums)//done
+router.get("/albums",musicController.getAllAlbums)//done ...
 router.get("/search",musicController.getAllSearch);
 router.get("/albums/:albumId",musicController.getAlbumById) // done
 //ek esi api bnani hai normal user ke liye jo ki sare songs sun skte hai 

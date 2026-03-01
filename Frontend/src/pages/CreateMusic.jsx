@@ -8,10 +8,10 @@ const CreateMusic = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.target);  
 
     try {
-      await API.post("/api/music/create", formData, {
+      await API.post("/api/music/create", formData, { 
         headers: { "Content-Type": "multipart/form-data" },
       });
 

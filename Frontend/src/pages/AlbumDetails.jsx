@@ -3,8 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
 const AlbumDetails = () => {
-  const { albumId } = useParams();
-  const [album, setAlbum] = useState(null);
+  const { albumId } = useParams(); //URL se albumId leta hai
+  const [album, setAlbum] = useState(null); //initially null hai jb backend se data aayega tb update hoga 
 
   useEffect(() => {
     axios

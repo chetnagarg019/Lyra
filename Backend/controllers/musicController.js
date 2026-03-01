@@ -4,40 +4,10 @@ import storageServices from "../services/storageServices.js";
 import albumModel from "../model/album.js";
 import crypto from "crypto";
 
-// async function createMusic(req, res) {
-//   const { title } = req.body; // title form-data se aa rha hai
-//   const file = req.file; // multer ke through aa rhi hai
-
-//   // const result = await uploadFile(file.buffer.toString('base64'));
-//   const result = await storageServices.uploadFile(
-//     file.buffer.toString("base64"),
-//   );
-//   //File ka buffer base64 me convert ho raha hai
-//   //ImageKit pe upload ho raha hai
-//   //result.url me cloud ka link mil raha hai
-
-//   // Step 6: Database me music save karna
-//   const music = await musicmodel.create({
-//     uri: result.url,
-//     title,
-//     artist: req.user.id,
-//   });
-
-//   res.status(201).json({
-//     message: "Music created successfully",
-//     music: {
-//       id: music._id,
-//       uri: music.uri,
-//       title: music.title,
-//       artist: music.artist,
-//     },
-//   });
-// }
-
 async function createMusic(req, res) {
   try {
     const { title } = req.body;
-    const file = req.file;
+    const file = req.file; //file → uploaded file (multer middleware se aata hai)
 
     //  Step 1: File validation
     if (!file) {
@@ -50,9 +20,9 @@ async function createMusic(req, res) {
     const hash = crypto
       .createHash("sha256") //cryptographic hash generate karta hai Same file ka hash hammesha same hoga
       .update(file.buffer) //file ka binary data
-      .digest("hex");
+      .digest("hex"); //readable string format me convert Ye digital fingerprint hai
 
-    // Step 3: Check duplicate file in DB
+    // Step 3: Check duplicate file in DB 
     const existingMusic = await musicmodel.findOne({ hash }); //Agar database me same hash exist karta hai → upload reject ho jayega
 
     if (existingMusic) {
@@ -62,13 +32,13 @@ async function createMusic(req, res) {
     }
 
     //  Step 4: Upload to cloud
-    const result = await storageServices.uploadFile(
+    const result = await storageServices.uploadFile( //File ko base64 me convert karke cloud service ko bheja. Cloudinary / S3 type service ho sakti hai.
       file.buffer.toString("base64"),
     );
 
     //  Step 5: Save to database including hash
     const music = await musicmodel.create({
-      uri: result.url,
+      uri: result.url, //cloud link       
       title,
       artist: req.user.id,
       hash: hash, //Database me hash bhi store ho gaya Future me system easily duplicate detect kar lega
@@ -126,8 +96,8 @@ async function createAlbum(req, res) {
 
     // 2 Validate musics (only artist’s own songs)
     const allowedMusics = await musicmodel.find({
-      _id: { $in: musics },
-      artist: req.user.id,
+      _id: { $in: musics }, //Find all songs jinka ID musics array me hai.
+      artist: req.user.id, //Aur wo songs isi artist ke hone chahiye.
     });
 
     if (allowedMusics.length !== musics.length) {
@@ -139,8 +109,8 @@ async function createAlbum(req, res) {
     // 3️ Create album
     const album = await albumModel.create({
       title,
-      artist: req.user.id,
-      musics: allowedMusics.map((m) => m._id),
+      artist: req.user.id, //artist reference store ho raha hai
+      musics: allowedMusics.map((m) => m._id), //musics array me sirf validated IDs store ho rahe hain
     });
 
     res.status(201).json({
@@ -215,7 +185,7 @@ async function getAllAlbums(req, res) {
     const albums = await albumModel
       .find()
       .populate("artist", "name email")
-      .populate("musics"); // 
+      .populate("musics"); //  Har music ID ki jagah pura music object aa jayega.
 
     res.status(200).json({
       message: "Albums fetched successfully",
@@ -230,7 +200,7 @@ async function getAllAlbums(req, res) {
 }
 //get all music of in album  ablum me jitte bhi musics hai unko fetch
 async function getAlbumById(req, res) {
-  const albumId = req.params.albumId;
+  const albumId = req.params.albumId; 
 
   const album = await albumModel
     .findById(albumId)

@@ -14,9 +14,9 @@ const AllAlbums = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-pink-50 via-purple-50 to-indigo-50 py-12 px-4 md:px-8">
+        <div className="min-h-screen bg-black py-12 px-4 md:px-8">
             {/* Page Title */}
-            <h1 className="text-5xl font-extrabold text-center text-gray-800 mb-12 tracking-wide">
+            <h1 className="text-5xl font-extrabold text-center text-white mb-12 tracking-wide ">
                 All Albums
             </h1>
 

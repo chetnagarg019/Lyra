@@ -26,15 +26,15 @@ const Login = ({ setUser }) => {
     try {
       const res = await axios.post(
         "http://localhost:5000/api/auth/login",
-        formData,
-        { withCredentials: true }
+        formData, 
+        { withCredentials: true } //Cookie set ho rahi hai. But browser tabhi cookie accept karega jab: frontend request me withCredentials: true likha ho.
       );
 
       alert(res.data.message);
 
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      setUser(res.data.user);   // 🔥 THIS LINE FIXES EVERYTHING
+      setUser(res.data.user);   //  THIS LINE FIXES EVERYTHING
 
       navigate("/");
 
