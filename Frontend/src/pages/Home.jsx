@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/music/")
+      .get("https://lyra-backend-topaz.vercel.app/api/music/")
       .then((res) => {
         setMusic(res.data.musics);
       })

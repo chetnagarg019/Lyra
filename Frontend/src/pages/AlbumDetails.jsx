@@ -8,7 +8,7 @@ const AlbumDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/music/albums/${albumId}`)
+      .get(`https://lyra-backend-topaz.vercel.app/api/music/albums/${albumId}`)
       .then((res) => {
         setAlbum(res.data.album);
       })

@@ -6,7 +6,7 @@ const AllAlbums = () => {
     const [albums, setAlbums] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/music/albums")
+        axios.get("https://lyra-backend-topaz.vercel.app/api/music/albums") //https://lyra-backend-topaz.vercel.app/api/music/albums
         .then((res) => {
             setAlbums(res.data.albums);
         })

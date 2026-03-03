@@ -11,7 +11,7 @@ function SearchPage() {
 
   useEffect(() => {
     if(query){
-      axios.get(`http://localhost:5000/api/music/search`)
+      axios.get(`https://lyra-backend-topaz.vercel.app/api/music/search`)
         .then(res => {
           setResults(res.data);
         })

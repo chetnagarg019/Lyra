@@ -25,7 +25,7 @@ const Login = ({ setUser }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://lyra-backend-topaz.vercel.app/api/auth/login",
         formData, 
         { withCredentials: true } //Cookie set ho rahi hai. But browser tabhi cookie accept karega jab: frontend request me withCredentials: true likha ho.
       );

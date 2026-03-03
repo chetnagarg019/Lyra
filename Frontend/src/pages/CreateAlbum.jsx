@@ -24,7 +24,7 @@ const CreateAlbum = () => {
     const fetchSongs = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/music/my-songs", //my-songs vale route me sirf vhi songs aaynege jiss artist ne logged in kr rkha hoga
+          "https://lyra-backend-topaz.vercel.app/api/music/my-songs", //my-songs vale route me sirf vhi songs aaynege jiss artist ne logged in kr rkha hoga
           { withCredentials: true }
         );
 
@@ -36,6 +36,7 @@ const CreateAlbum = () => {
 
     fetchSongs();
   }, []);
+  //https://lyra-backend-topaz.vercel.app/api/music/albums
 
   // 🎶 Checkbox handler
   const handleSongSelect = (e) => {

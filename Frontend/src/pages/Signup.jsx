@@ -21,7 +21,7 @@ const Signup = () => {
 
     try {
       const res = await axios.post( //Then I send a POST request to my backend API /api/auth/register using Axios.
-        "http://localhost:5000/api/auth/register",
+        "https://lyra-backend-topaz.vercel.app/api/auth/register",
         formData,
       );
 
