@@ -1,28 +1,72 @@
 import React from "react";
-import API from "../api/axios";
+import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 
 const CreateMusic = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    const formData = new FormData(e.target);  
+  //   const formData = new FormData(e.target);  
 
-    try {
-      await API.post("/api/music/create", formData, { 
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+  //   try {
+  //     await API.post("/api/music/create", formData, { 
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
 
-      alert("Song created successfully 🎵");
-      e.target.reset();
-      navigate("/");
-    } catch (err) {
-      console.log(err.response?.data || err.message);
-      alert(err.response?.data?.message || "Error creating music");
-    }
-  };
+  //     alert("Song created successfully 🎵");
+  //     e.target.reset();
+  //     navigate("/");
+  //   } catch (err) {
+  //     console.log(err.response?.data || err.message);
+  //     alert(err.response?.data?.message || "Error creating music");
+  //   }
+  // };
+
+  
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+
+  try {
+    await axios.post(
+      "https://lyra-backend-topaz.vercel.app/api/music/create",  // ✅ full backend URL
+      formData,
+      {
+        withCredentials: true,   // cookies ke liye
+      }
+    );
+
+    alert("Song created successfully 🎵");
+    e.target.reset();
+    navigate("/");
+  } catch (err) {
+    console.log(err.response?.data || err.message);
+    alert(err.response?.data?.message || "Error creating music");
+  }
+};
+
+  // useEffect(() => {
+  //   const fetchSongs = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         "https://lyra-backend-topaz.vercel.app/api/music/my-songs", //my-songs vale route me sirf vhi songs aaynege jiss artist ne logged in kr rkha hoga
+  //         { withCredentials: true }
+  //       );
+
+  //       setSongs(res.data); // backend se direct array aa raha hai
+  //     } catch (err) {
+  //       console.log("Error fetching songs:", err);
+  //     }
+  //   };
+
+  //   fetchSongs();
+  // }, []);
+  
 
   return (
     <div className="min-h-screen bg-black text-white p-8">

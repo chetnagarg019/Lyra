@@ -32,8 +32,8 @@ async function registerUser(req, res) {
 
     res.cookie("token", token, { //tojen cookeie name
       httpOnly: true, //JS se access nahi hoga (secure)
-      secure: false, // HTTPS pe hi chalega (production me true karte hain)
-      sameSite: "strict", //CSRF attack se bachata hai
+      secure: true, // HTTPS pe hi chalega (production me true karte hain)
+      sameSite: "None", //CSRF attack se bachata hai
     });
 
     res.status(201).json({ //201 → Created (new resource create hua)
@@ -69,11 +69,12 @@ async function loginUser(req, res) {
     const token = createToken(user);
 
     //Token browser me cookie ke form me store ho raha hai.
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict",
+    res.cookie("token", token, { //tojen cookeie name
+      httpOnly: true, //JS se access nahi hoga (secure)
+      secure: true, // HTTPS pe hi chalega (production me true karte hain)
+      sameSite: "None", //CSRF attack se bachata hai
     });
+
 
     res.status(200).json({
       message: "Login successful",
