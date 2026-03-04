@@ -7,8 +7,10 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 //multer use
 const upload = multer({
-    storage : multer.memoryStorage()
+    storage : multer.diskStorage() //File temporary disk pe save hogi RAM crash nahi hoga Stable ho jayega (thoda better)
 })
+
+
 
 // File server ke RAM me temporarily store hogi
 //  Direct disk pe save nahi hogi
@@ -25,6 +27,7 @@ router.get("/albums/:albumId",musicController.getAlbumById) // done
 
 //upload.single("music") =>  Multer file handle karega Form-data me "music" naam ki file expect karega File ko req.file me daal dega
 
-export default router;
+export default router; 
+//this is a file 
 
 //musicRoutes ek esi api hai jisme sirf artist hi music ko create kr ske koi bhi nirmal user aake usme music create na kre vo sirf
