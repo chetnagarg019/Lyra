@@ -67,7 +67,7 @@ const CreateAlbum = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/music/album",   // ✅ correct route
+        "https://lyra-backend-topaz.vercel.app/api/music/album",   // ✅ correct route
         {
           title,
           musics: selectedSongs,   // ✅ backend expects musics

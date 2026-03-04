@@ -30,11 +30,17 @@ async function registerUser(req, res) {
 
     const token = createToken(user); //createToken() function JWT token banata hai  Isme user ki info encode hoti hai
 
-    res.cookie("token", token, { //tojen cookeie name
-      httpOnly: true, //JS se access nahi hoga (secure)
-      secure: true, // HTTPS pe hi chalega (production me true karte hain)
-      sameSite: "None", //CSRF attack se bachata hai
-    });
+    // res.cookie("token", token, { //tojen cookeie name
+    //   httpOnly: true, //JS se access nahi hoga (secure)
+    //   secure: true, // HTTPS pe hi chalega (production me true karte hain)
+    //   sameSite: "None", //CSRF attack se bachata hai
+    // });
+
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+});
 
     res.status(201).json({ //201 → Created (new resource create hua)
       message: "Signup successful",
@@ -69,11 +75,17 @@ async function loginUser(req, res) {
     const token = createToken(user);
 
     //Token browser me cookie ke form me store ho raha hai.
-    res.cookie("token", token, { //tojen cookeie name
-      httpOnly: true, //JS se access nahi hoga (secure)
-      secure: true, // HTTPS pe hi chalega (production me true karte hain)
-      sameSite: "None", //CSRF attack se bachata hai
-    });
+    // res.cookie("token", token, { //tojen cookeie name
+    //   httpOnly: true, //JS se access nahi hoga (secure)
+    //   secure: true, // HTTPS pe hi chalega (production me true karte hain)
+    //   sameSite: "None", //CSRF attack se bachata hai
+    // });
+
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+});
 
 
     res.status(200).json({

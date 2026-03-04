@@ -17,9 +17,15 @@ const app = express();
 //   ],
 //   credentials: true,
 // }));
+// const allowedOrigins = [
+//   "http://localhost:5173",
+//   "https://lyra-dusky.vercel.app",
+// ];
+
 const allowedOrigins = [
   "http://localhost:5173",
   "https://lyra-dusky.vercel.app",
+  /\.vercel\.app$/,
 ];
 
 app.use(
