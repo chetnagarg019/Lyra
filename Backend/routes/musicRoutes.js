@@ -7,7 +7,7 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 //multer use
 const upload = multer({
-    storage : multer.diskStorage() //File temporary disk pe save hogi RAM crash nahi hoga Stable ho jayega (thoda better)
+    storage : multer.memoryStorage()
 })
 
 // File server ke RAM me temporarily store hogi
